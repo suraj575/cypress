@@ -19,6 +19,5 @@ jobs:
           npm install 
           npm run cypress:run
       - name: Tests
-        run: echo "All tests are passed"
+        run: echo "hi testing"
 
-        
