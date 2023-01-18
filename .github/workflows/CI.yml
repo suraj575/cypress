@@ -1,0 +1,23 @@
+# name: Tests
+
+# on:
+#   push:
+#     branches-ignore: [main, master]
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: Use Node.js ${{ matrix.node-version }}
+#         uses: actions/setup-node@v2
+#         with:
+#           registry-url: "https://npm.pkg.github.com"
+#           node-version: "14.15.1"
+#       - run: |
+#           npm install 
+#           npm run cypress:run
+#       - name: Tests
+#         run: echo "All tests are passed"
+        
