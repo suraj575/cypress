@@ -19,5 +19,5 @@ jobs:
           npm install 
           npm run cypress:run
       - name: Tests
-        run: echo "hi testing"
+        run: echo "hi testing 12345"
 
