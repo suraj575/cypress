@@ -1,16 +1,20 @@
-import {Component, OnInit} from "@angular/core";
-import {Store} from "@ngrx/store";
-import {Observable} from "rxjs";
-import {CustomerActions} from "../+state/customer.actions";
-import {fromCustomer} from "../+state/customer.selectors";
-import {Customer} from "../customer";
+import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { CustomerActions } from '../+state/customer.actions';
+import { fromCustomer } from '../+state/customer.selectors';
+import { Customer } from '../customer';
 
 @Component({
-  templateUrl: "./customers.component.html",
-  styleUrls: ["./customers.component.scss"]
+  templateUrl: './customers.component.html',
+  styleUrls: ['./customers.component.scss'],
 })
 export class CustomersComponent implements OnInit {
-  data$: Observable<{ customers: Customer[]; currentPage: number; pageCount: number }>;
+  data$: Observable<{
+    customers: Customer[];
+    currentPage: number;
+    pageCount: number;
+  }>;
 
   constructor(private store: Store) {
     this.data$ = this.store.select(fromCustomer.selectCustomersAndPage);

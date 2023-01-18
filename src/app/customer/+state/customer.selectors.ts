@@ -1,17 +1,27 @@
-import {createFeatureSelector, createSelector} from "@ngrx/store";
-import {customerFeatureKey, State} from "./customer.reducer";
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { customerFeatureKey, State } from './customer.reducer';
 
 const selectCustomerState = createFeatureSelector<State>(customerFeatureKey);
 
-const selectAll = createSelector(selectCustomerState, (state) => state.customers);
-
-const selectById = (id: number) => createSelector(selectAll, customers =>
-  customers.find(customer => customer.id === id)
+const selectAll = createSelector(
+  selectCustomerState,
+  (state) => state.customers
 );
 
-const selectCurrentPage = createSelector(selectCustomerState, (state) => state.currentPage);
+const selectById = (id: number) =>
+  createSelector(selectAll, (customers) =>
+    customers.find((customer) => customer.id === id)
+  );
 
-const selectPageCount = createSelector(selectCustomerState, (state) => state.pageCount);
+const selectCurrentPage = createSelector(
+  selectCustomerState,
+  (state) => state.currentPage
+);
+
+const selectPageCount = createSelector(
+  selectCustomerState,
+  (state) => state.pageCount
+);
 
 const selectCustomersAndPage = createSelector(
   selectAll,
@@ -20,7 +30,7 @@ const selectCustomersAndPage = createSelector(
   (customers, currentPage, pageCount) => ({
     customers,
     currentPage,
-    pageCount
+    pageCount,
   })
 );
 
@@ -28,5 +38,5 @@ export const fromCustomer = {
   selectAll,
   selectById,
   selectCurrentPage,
-  selectCustomersAndPage
+  selectCustomersAndPage,
 };

@@ -1,28 +1,31 @@
-import {HttpParams} from "@angular/common/http";
-import {Injectable} from "@angular/core";
-import {sortBy} from "lodash-es";
-import {Observable, of} from "rxjs";
-import {delay, map, tap} from "rxjs/operators";
-import {Customer} from "./customer";
-import {customers as originalCustomers} from "./data";
+import { HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { sortBy } from 'lodash-es';
+import { Observable, of } from 'rxjs';
+import { delay, map, tap } from 'rxjs/operators';
+import { Customer } from './customer';
+import { customers as originalCustomers } from './data';
 
 @Injectable()
 export class MockedHttpClient {
-  private customers = sortBy(originalCustomers, "name");
+  private customers = sortBy(originalCustomers, 'name');
   private pageSize = 10;
 
   get(url: string, options: { params: HttpParams }): Observable<Customer[]> {
-    const pageParameter = options.params.get("page");
+    const pageParameter = options.params.get('page');
     const page = pageParameter ? Number(pageParameter) : 1;
-    return this.sortCustomers(page).pipe(this.logRequest("GET", url));
+    return this.sortCustomers(page).pipe(this.logRequest('GET', url));
   }
 
-  post(url: string, customer: Customer): Observable<{ customers: Customer[]; id: number }> {
+  post(
+    url: string,
+    customer: Customer
+  ): Observable<{ customers: Customer[]; id: number }> {
     const nextId = this.getNextId();
-    this.customers.push({...customer, id: nextId});
+    this.customers.push({ ...customer, id: nextId });
     return this.sortCustomers(1).pipe(
-      map((customers) => ({customers, id: nextId})),
-      this.logRequest("POST", url, customer)
+      map((customers) => ({ customers, id: nextId })),
+      this.logRequest('POST', url, customer)
     );
   }
 
@@ -33,7 +36,7 @@ export class MockedHttpClient {
       }
       return c;
     });
-    return of({customer});
+    return of({ customer });
   }
 
   delete(url: string): Observable<Customer[]> {
@@ -42,19 +45,21 @@ export class MockedHttpClient {
       const id = Number(match[0]);
       this.customers = this.customers.filter((customer) => customer.id !== id);
     }
-    return this.sortCustomers(1).pipe(this.logRequest("DELETE", url));
+    return this.sortCustomers(1).pipe(this.logRequest('DELETE', url));
   }
 
   getNextId() {
     return Math.max(...this.customers.map((customer) => customer.id)) + 1;
   }
 
-  private sortCustomers(page: number): Observable<{ content: Customer[]; totalPages: number }> {
+  private sortCustomers(
+    page: number
+  ): Observable<{ content: Customer[]; totalPages: number }> {
     const end = (page + 1) * this.pageSize;
     const start = end - this.pageSize;
     return of({
       content: this.customers.slice(start, end),
-      totalPages: Math.ceil(this.customers.length / this.pageSize)
+      totalPages: Math.ceil(this.customers.length / this.pageSize),
     });
   }
 
@@ -63,7 +68,7 @@ export class MockedHttpClient {
       observable.pipe(
         delay(200),
         tap((response) => {
-          console.group("Mocked Http Client");
+          console.group('Mocked Http Client');
           console.log(`${httpMethod}: ${url}`);
           if (body) {
             console.log(`Body: ${JSON.stringify(body)}`);

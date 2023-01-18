@@ -17,7 +17,7 @@ export interface CustomerAppState {
 export const initialState: State = {
   customers: [],
   currentPage: 0,
-  pageCount: 0
+  pageCount: 0,
 };
 
 export const customerReducer = createReducer<State>(
@@ -26,23 +26,28 @@ export const customerReducer = createReducer<State>(
   on(CustomerActions.loaded, (state, { customers, pageCount }) => ({
     ...state,
     customers,
-    pageCount
+    pageCount,
   })),
-  on(CustomerActions.added, CustomerActions.updated, CustomerActions.removed, () => initialState),
+  on(
+    CustomerActions.added,
+    CustomerActions.updated,
+    CustomerActions.removed,
+    () => initialState
+  ),
   on(CustomerActions.previousPage, (state) => ({
     ...state,
-    currentPage: state.currentPage - 1
+    currentPage: state.currentPage - 1,
   })),
   on(CustomerActions.nextPage, (state) => ({
     ...state,
-    currentPage: state.currentPage + 1
+    currentPage: state.currentPage + 1,
   })),
   on(
     CustomerActions.previousPageSuccess,
     CustomerActions.nextPageSuccess,
     (state, { customers }) => ({
       ...state,
-      customers
+      customers,
     })
   )
 );
