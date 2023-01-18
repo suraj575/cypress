@@ -12,15 +12,20 @@ import { HomeComponent } from './home/home.component';
 
 it('should check /home redirects to /', fakeAsync(() => {
   const fixture = TestBed.configureTestingModule({
-    declarations: [HomeComponent, AppComponent, GdpcComponent, RequestInfoComponent],
+    declarations: [
+      HomeComponent,
+      AppComponent,
+      GdpcComponent,
+      RequestInfoComponent,
+    ],
     imports: [RouterTestingModule.withRoutes(APP_ROUTES)],
     providers: [
       {
         provide: UserLoaderGuard,
-        useValue: { canActivate: () => true }
-      }
+        useValue: { canActivate: () => true },
+      },
     ],
-    schemas: [NO_ERRORS_SCHEMA]
+    schemas: [NO_ERRORS_SCHEMA],
   }).createComponent(AppComponent);
 
   const router = TestBed.inject(Router);

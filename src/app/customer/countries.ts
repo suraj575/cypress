@@ -16,5 +16,5 @@ export const countries = [
   ['RU', 'Russia'],
   ['SE', 'Sweden'],
   ['UK', 'United Kingdom'],
-  ['US', 'USA']
+  ['US', 'USA'],
 ].map(([value, label]) => ({ value, label }));
